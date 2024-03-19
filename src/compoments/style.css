@@ -1,0 +1,11 @@
+body {
+  width: 100vw;
+}
+#root {
+  margin: 0 auto 0 auto;
+}
+
+.signin_outer {
+  align-items: center;
+  width: 100%;
+}
