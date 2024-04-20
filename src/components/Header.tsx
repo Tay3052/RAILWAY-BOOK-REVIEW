@@ -1,5 +1,5 @@
 import { Outlet } from "react-router-dom";
-import "./header.css";
+import "../assets/scss/Header.scss";
 
 const Header = () => {
   return (

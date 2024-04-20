@@ -1,7 +1,11 @@
-import Signup from "../compoments/Signup";
+import Signup from "../components/Signup";
 
 export const SignUpView = () => {
-  return <Signup />;
+  return (
+    <>
+      <Signup />
+    </>
+  );
 };
 
 export default SignUpView;
