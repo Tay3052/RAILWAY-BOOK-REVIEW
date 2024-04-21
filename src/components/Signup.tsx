@@ -4,6 +4,7 @@ import axios from "axios";
 import { useNavigate } from "react-router-dom";
 import Compressor from "compressorjs";
 import { useState } from "react";
+import Cookies from "js-cookie";
 
 // バリデーション設定
 const validation = Yup.object().shape({
@@ -20,6 +21,10 @@ const validation = Yup.object().shape({
 const SignUp = () => {
   const navigate = useNavigate();
   const [token, setToken] = useState(""); // トークンを格納するstate
+  const flag = Cookies.get("token") || "";
+  if (flag) {
+    navigate("/"); // トークンがある場合はHomeにリダイレクト
+  }
 
   const handleSubmit = async (values, { setSubmitting }) => {
     // ユーザー登録APIとアイコンアップロードAPIに必要なtokenを取得する

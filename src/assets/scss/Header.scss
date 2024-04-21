@@ -10,3 +10,28 @@
   margin: 0;
   padding: 20px;
 }
+
+.nav_ul {
+  position: absolute;
+  right: 0;
+  top: 60px;
+  color: white;
+}
+
+.nav_li {
+  display: inline-block;
+  list-style: none;
+  margin-right: 20px;
+}
+
+.user_name {
+  position: absolute;
+  top: 60px;
+  left: 20px;
+  color: white;
+}
+
+.link {
+  text-decoration: none;
+  color: white;
+}

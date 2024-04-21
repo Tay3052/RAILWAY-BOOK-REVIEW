@@ -3,6 +3,7 @@ import Header from "./components/Header";
 import EmailCheck from "./components/EmailCheck";
 import Signup from "./components/Signup";
 import Signin from "./components/Signin";
+import Signout from "./components/Signout";
 import TopPage from "./views/Toppage";
 import "./App.css";
 
@@ -16,6 +17,7 @@ function App() {
             <Route path="/emailcheck" element={<EmailCheck />} />
             <Route path="/signup" element={<Signup />} />
             <Route path="/signin" element={<Signin />} />
+            <Route path="/signout" element={<Signout />} />
           </Route>
         </Routes>
       </BrowserRouter>

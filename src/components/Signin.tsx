@@ -1,11 +1,10 @@
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import "./style.css";
 import axios from "axios";
 import { Formik, Form, Field, ErrorMessage } from "formik";
 import * as Yup from "yup";
 import { useCookies } from "react-cookie";
-import "../assets/scss/SignupSignin.scss";
-import { useNavigate } from "react-router-dom";
+import "../assets/scss/TopPage.scss";
 
 const validation = Yup.object().shape({
   email: Yup.string()
@@ -18,53 +17,44 @@ const validation = Yup.object().shape({
 
 const Signin = () => {
   const navigate = useNavigate();
-  const [cookie, setCookies] = useCookies(["token"]);
+  const [cookie, setCookie] = useCookies(["token"]);
 
-  // anyになるのはなぜ？
   const handleSubmit = async (values, { setSubmitting }) => {
     const signinForm = new FormData();
     signinForm.append("email", values.email);
     signinForm.append("password", values.password);
+    const res = await axios.post(
+      "https://railway.bookreview.techtrain.dev/signin",
+      signinForm,
+      {
+        headers: { "Content-Type": "application/json" },
+      }
+    );
+    // クッキーをセットすることで、トークンを保持する
+    // こうやってセットするとクッキー文字列だけ保存できた
+    setCookie("token", res.data.token, { path: "/" });
+    const token = res.data.token;
+    console.log(cookie.token);
 
-    try {
-      const res = await axios.post(
-        "https://railway.bookreview.techtrain.dev/signin",
-        signinForm,
-        {
-          headers: { "Content-Type": "application/json" },
-        }
-      );
-      setCookies("token", res.data.token);
-    } catch (error) {
-      console.error(error);
-    }
+    const pic = await axios.get(
+      "https://railway.bookreview.techtrain.dev/users",
+      {
+        headers: {
+          "Content-Type": "application/json",
+          Authorization: `Bearer ${token}`,
+        },
+        responseType: "blob",
+      }
+    );
+    const data = pic.data;
+    const blob = new Blob([data], { type: "image/*" });
+    const imgUrl = window.URL.createObjectURL(blob);
 
-    const token = cookie.token;
-    console.log(token);
-
-    try {
-      const pic = await axios.get(
-        "https://railway.bookreview.techtrain.dev/users",
-        {
-          headers: {
-            "Content-Type": "application/json",
-            Authorization: `Bearer ${token}`,
-          },
-          responseType: "blob",
-        }
-      );
-      const data = pic.data;
-      const blob = new Blob([data], { type: "image/jpeg, image/png" });
-      const imgUrl = window.URL.createObjectURL(blob);
-
-      console.log(data, imgUrl);
-      console.log("Success!");
-      // フォームの送信が完了したら、Submittingの状態をリセットする
-      setSubmitting(false);
-      navigate("/"); // 画面遷移が出来たら成功
-    } catch (error) {
-      console.error(error);
-    }
+    console.log(pic, imgUrl);
+    console.log("Success!");
+    // フォームの送信が完了したら、Submittingの状態をリセットする
+    setSubmitting(false);
+    navigate("/"); // 画面遷移が出来たら成功
   };
 
   return (
