@@ -23,10 +23,6 @@ const Header = () => {
       });
   }, [token, user]);
 
-  const handleLogout = () => {
-    Cookies.remove("token");
-  };
-
   return (
     <>
       <div className="header">
@@ -50,7 +46,7 @@ const Header = () => {
               Signup
             </Link>
           </li>
-          <li className="nav_li" onClick={handleLogout}>
+          <li className="nav_li">
             <Link to={"/Signout"} className="link">
               Signout
             </Link>

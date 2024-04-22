@@ -5,6 +5,8 @@ import { Formik, Form, Field, ErrorMessage } from "formik";
 import * as Yup from "yup";
 import { useCookies } from "react-cookie";
 import "../assets/scss/TopPage.scss";
+import Cookies from "js-cookie";
+import { useEffect } from "react";
 
 const validation = Yup.object().shape({
   email: Yup.string()
@@ -18,7 +20,11 @@ const validation = Yup.object().shape({
 const Signin = () => {
   const navigate = useNavigate();
   const [cookie, setCookie] = useCookies(["token"]);
-
+  useEffect(() => {
+    if (Cookies.get("token") !== undefined) {
+      navigate("/"); // トークンがある場合はHomeにリダイレクト
+    }
+  });
   const handleSubmit = async (values, { setSubmitting }) => {
     const signinForm = new FormData();
     signinForm.append("email", values.email);
