@@ -22,25 +22,29 @@ const SignUp = () => {
   const navigate = useNavigate();
   const [token, setToken] = useState(""); // トークンを格納するstate
 
+  // トークンがある場合はHomeにリダイレクト
   useEffect(() => {
     if (Cookies.get("token") !== undefined) {
-      navigate("/"); // トークンがある場合はHomeにリダイレクト
+      navigate("/");
     }
   });
 
   const handleSubmit = async (values, { setSubmitting }) => {
     // ユーザー登録APIとアイコンアップロードAPIに必要なtokenを取得する
     try {
-      const res = await axios.post(
-        "https://railway.bookreview.techtrain.dev/users",
-        {
+      axios
+        .post("https://railway.bookreview.techtrain.dev/users", {
           name: values.name,
           email: values.email,
           password: values.password,
-        }
-      );
-
-      setToken(res.data.token); // レスポンスからtokenを取得
+        })
+        .then((res) => {
+          console.log(res);
+          setToken(res.data.token); // レスポンスからtokenを取得
+        })
+        .catch((error) => {
+          console.error("Registration error:", error);
+        });
 
       // アイコンアップロードAPIに送信
       const iconFormData = new FormData();
@@ -58,12 +62,11 @@ const SignUp = () => {
       );
 
       console.log("User registered and icon uploaded successfully!");
+      setSubmitting(false); // Submittingの状態をリセット
       navigate("/"); // 成功時に画面遷移
     } catch (error) {
       console.error("Registration error:", error);
     }
-
-    setSubmitting(false); // Submittingの状態をリセット
   };
 
   const handleFileChange = (event, setFieldValue) => {

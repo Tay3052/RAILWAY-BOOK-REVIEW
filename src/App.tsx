@@ -5,6 +5,7 @@ import Signup from "./components/Signup";
 import Signin from "./components/Signin";
 import Signout from "./components/Signout";
 import TopPage from "./views/Toppage";
+import UnloginBooks from "./components/UnloginBooks";
 import "./App.css";
 
 function App() {
@@ -15,6 +16,7 @@ function App() {
           <Route path="/" element={<Header />}>
             <Route path="/" element={<TopPage />} />
             <Route path="/emailcheck" element={<EmailCheck />} />
+            <Route path="/unlogin" element={<UnloginBooks />} />
             <Route path="/signup" element={<Signup />} />
             <Route path="/signin" element={<Signin />} />
             <Route path="/signout" element={<Signout />} />

@@ -15,12 +15,12 @@ interface ReceiveTokenProps {
 }
 
 // コンテキストを作成
-export const MyContext1 = React.createContext<number>(0);
+export const CurrentPage = React.createContext<number>(0);
 
 // 本の情報を取得するコンポーネント
 const TokenBooksInfo: React.FC<ReceiveTokenProps> = ({ token, page }) => {
   const [books, setBooks] = useState<Books[]>([]); // 本の情報を格納するためのstate
-  const count = useContext(MyContext1);
+  const count = useContext(CurrentPage);
 
   useEffect(() => {
     if (token) getBooks(page);
@@ -28,26 +28,20 @@ const TokenBooksInfo: React.FC<ReceiveTokenProps> = ({ token, page }) => {
 
   // 本の情報を取得する関数
   // tokenに値が入っている場合のみ実行
-  const getBooks = (page: number) => {
-    axios
-      .get(
-        `https://railway.bookreview.techtrain.dev//books?offset=${
-          (page - 1) * 10 // ページ数から取得する本の数を計算
-        }`,
-        {
-          headers: {
-            "Content-Type": "application/json",
-            Authorization: `Bearer ${token}`,
-          },
-        }
-      )
-      .then((res) => {
-        setBooks(res.data);
-        console.log(books);
-      })
-      .catch((error) => {
-        console.error(error);
-      });
+  const getBooks = async (page: number) => {
+    const res = await axios.get(
+      `https://railway.bookreview.techtrain.dev//books?offset=${
+        (page - 1) * 10 // ページ数から取得する本の数を計算
+      }`,
+      {
+        headers: {
+          "Content-Type": "application/json",
+          Authorization: `Bearer ${token}`,
+        },
+      }
+    );
+    setBooks(res.data);
+    console.log(books);
   };
 
   const handlePageChange = (page: number) => {
@@ -71,7 +65,7 @@ const TokenBooksInfo: React.FC<ReceiveTokenProps> = ({ token, page }) => {
           total={books.length}
           size="xl"
           current={count}
-          pageSize={10}
+          pagesize={10}
           variant="ghost"
           colorScheme="secondary"
           withEdges

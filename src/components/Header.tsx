@@ -23,39 +23,78 @@ const Header = () => {
       });
   }, [token, user]);
 
-  return (
-    <>
-      <div className="header">
-        <h1>書籍レビュー</h1>
-        <p className="user_name">ようこそ {user} さん</p>
-      </div>
-      <div className="center">
-        <ul className="nav_ul">
-          <li className="nav_li">
-            <Link to={"/"} className="link">
-              Home
+  if (token === "") {
+    return (
+      <>
+        <div className="header">
+          <h1>
+            <Link className="link" to={"/unlogin"}>
+              書籍レビュー
             </Link>
-          </li>
-          <li className="nav_li">
-            <Link to={"/Signin"} className="link">
-              Signin
+          </h1>
+          <p className="user_name">ようこそ {user} さん</p>
+        </div>
+        <div className="center">
+          <ul className="nav_ul">
+            <li className="nav_li">
+              <Link to={"/"} className="link">
+                Home
+              </Link>
+            </li>
+            <li className="nav_li">
+              <Link to={"/Signin"} className="link">
+                Signin
+              </Link>
+            </li>
+            <li className="nav_li">
+              <Link to={"/Signup"} className="link">
+                Signup
+              </Link>
+            </li>
+            <li className="nav_li">
+              <Link to={"/Signout"} className="link">
+                Signout
+              </Link>
+            </li>
+          </ul>
+        </div>
+        <Outlet />
+      </>
+    );
+  } else {
+    return (
+      <>
+        <div className="header">
+          <h1>
+            <Link className="link" to={"/unlogin"}>
+              書籍レビュー
             </Link>
-          </li>
-          <li className="nav_li">
-            <Link to={"/Signup"} className="link">
-              Signup
-            </Link>
-          </li>
-          <li className="nav_li">
-            <Link to={"/Signout"} className="link">
-              Signout
-            </Link>
-          </li>
-        </ul>
-      </div>
-      <Outlet />
-    </>
-  );
+          </h1>
+          <p className="user_name">ようこそ {user} さん</p>
+        </div>
+        <div className="center">
+          <ul className="nav_ul">
+            <li className="nav_li">
+              <Link to={"/"} className="link">
+                Home
+              </Link>
+            </li>
+            <li className="nav_li">
+              <Link to={"/Profile"} className="link">
+                Profile編集
+              </Link>
+            </li>
+            <li className="nav_li">
+              <Link to={"/Signout"} className="link">
+                Signout
+              </Link>
+            </li>
+          </ul>
+        </div>
+        <Outlet />
+      </>
+    );
+  }
 };
 
 export default Header;
