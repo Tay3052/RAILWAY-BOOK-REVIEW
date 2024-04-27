@@ -10,7 +10,9 @@ const login = () => {
         <input type="text" placeholder="username" data-testid="Username" />
         <label htmlFor="password">Password</label>
         <input type="password" placeholder="password" data-testid="Password" />
-        <button type="submit">Login</button>
+        <button type="submit" data-testid="submitButton">
+          Login
+        </button>
       </form>
     </>
   );

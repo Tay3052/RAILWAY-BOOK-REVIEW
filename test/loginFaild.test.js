@@ -11,8 +11,8 @@ import React from "react";
 test("formが存在することを確認(ユーザーネーム、パスワード、ログインボタン)", () => {
   render(<Login />);
   //formに emailとpasswordのinputがあるか確認
-  const userInput = screen.getByTestId("Username"); //labelのfor属性とinputのid属性が一致しているか確認
-  const passwordInput = screen.getByTestId("Password");
+  const userInput = screen.getByTestId("Username");
+  const passwordInput = screen.getByTestId(""); // Passwordが空になっている
   const submitButton = screen.getByRole("button");
   expect(userInput).toBeInTheDocument();
   expect(passwordInput).toBeInTheDocument();
