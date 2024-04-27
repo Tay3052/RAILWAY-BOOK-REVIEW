@@ -23,7 +23,7 @@ const Header = () => {
       });
   }, [token, user]);
 
-  if (token === "") {
+  if (token !== Cookies.get("token") || "") {
     return (
       <>
         <div className="header">

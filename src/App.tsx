@@ -7,6 +7,7 @@ import Signout from "./components/Signout";
 import TopPage from "./views/Toppage";
 import UnloginBooks from "./components/UnloginBooks";
 import "./App.css";
+import EditProfile from "./components/EditProfile";
 
 function App() {
   return (
@@ -17,6 +18,7 @@ function App() {
             <Route path="/" element={<TopPage />} />
             <Route path="/emailcheck" element={<EmailCheck />} />
             <Route path="/unlogin" element={<UnloginBooks />} />
+            <Route path="/profile" element={<EditProfile />} />
             <Route path="/signup" element={<Signup />} />
             <Route path="/signin" element={<Signin />} />
             <Route path="/signout" element={<Signout />} />

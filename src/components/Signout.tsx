@@ -12,7 +12,9 @@ const Signout = () => {
     return (
       <>
         <div className="center">
-          <h1 className="title">ログアウト通知</h1>
+          <h1 className="title" style={{ margin: "20px 0 0 0" }}>
+            ログアウト通知
+          </h1>
           <p>ログアウトしました</p>
         </div>
 
@@ -21,18 +23,17 @@ const Signout = () => {
         </div>
       </>
     );
+  } else {
+    return (
+      <>
+        <div className="center">
+          <h1 className="title">ログイン出来ていません</h1>
+        </div>
+        <div className="center">
+          <Link to="/">トップ画面に戻る</Link>
+        </div>
+      </>
+    );
   }
-
-  return (
-    <>
-      <div className="center">
-        <h1 className="title">ログイン出来ていません</h1>
-      </div>
-      <div className="center">
-        <Link to={"/"}>トップ画面に戻る</Link>
-      </div>
-    </>
-  );
 };
-
 export default Signout;

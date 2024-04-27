@@ -1,26 +1,56 @@
-import React from "react";
-import { Formik, Form, Field, ErrorMessage } from "formik";
-import * as Yup from "yup";
-
-const validation = Yup.object().shape({
-  name: Yup.string().required("名前は必須です"),
-  email: Yup.string()
-    .email("メールアドレスの形式が違います")
-    .required("メールアドレスは必須です"),
-  password: Yup.string()
-    .min(8, "パスワードは8文字以上です")
-    .required("パスワードは必須です"),
-  icon: Yup.mixed().required("画像は必須です"),
-});
+import React, { useState } from "react";
+import { Formik, Form, Field } from "formik";
+import { useNavigate } from "react-router-dom";
+import Cookies from "js-cookie";
+import axios from "axios";
 
 const EditProfile = () => {
+  const [name, setName] = useState(""); // ユーザー名を格納するstate
+  const token = Cookies.get("token") || "";
+
+  const handleSubmit = async (
+    values,
+    { setSubmitting }: { setSubmitting: (isSubmitting: boolean) => void }
+  ) => {
+    const name = await axios.put(
+      "https://railway.bookreview.techtrain.dev/users",
+      values.name,
+      {
+        headers: {
+          "Content-Type": "application/json",
+          Authorization: `Bearer ${token}`,
+        },
+      }
+    );
+  };
+
   return (
     <>
-      <div className="center">
-        <Form>
-          
-        </Form>
-      </div>
+      <Formik
+        initialValues={{
+          name: "",
+        }}
+        onSubmit={handleSubmit}>
+        {({ isSubmitting }) => (
+          <Form>
+            <div className="forms">
+              <h1>プロフィール変更</h1>
+              <label htmlFor="name">名前</label>
+              <Field
+                type="text"
+                name="name"
+                id="name"
+                onSubmit={setName(name)}
+              />
+              <button type="submit" disabled={isSubmitting}>
+                {isSubmitting ? "登録中です..." : "新規登録"}
+              </button>
+            </div>
+          </Form>
+        )}
+      </Formik>
     </>
   );
 };
+
+export default EditProfile;
