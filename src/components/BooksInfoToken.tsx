@@ -1,7 +1,7 @@
-import React, { useEffect, useState, useContext } from "react";
-import axios from "axios";
-import "../assets/scss/SignupSignin.scss";
-import { Pagination } from "@yamada-ui/react";
+import React, { useEffect, useState, useContext } from 'react';
+import axios from 'axios';
+import '../assets/scss/SignupSignin.scss';
+import { Pagination } from '@yamada-ui/react';
 
 // Propsの型を定義
 interface Books {
@@ -35,10 +35,10 @@ const TokenBooksInfo: React.FC<ReceiveTokenProps> = ({ token, page }) => {
       }`,
       {
         headers: {
-          "Content-Type": "application/json",
+          'Content-Type': 'application/json',
           Authorization: `Bearer ${token}`,
         },
-      }
+      },
     );
     setBooks(res.data);
     console.log(books);
@@ -48,32 +48,36 @@ const TokenBooksInfo: React.FC<ReceiveTokenProps> = ({ token, page }) => {
     getBooks(page);
   };
 
-  return (
-    <>
-      <div className="center">
-        <h1 className="title">本の情報</h1>
-        <ul className="ul center">
-          {books.map((book) => (
-            <li key={book.id} className="li">
-              {book.title}
-            </li>
-          ))}
-        </ul>
-      </div>
-      <div className="center" style={{ margin: "20px 0 0 0" }}>
-        <Pagination
-          total={books.length}
-          size="xl"
-          current={count}
-          pagesize={10}
-          variant="ghost"
-          colorScheme="secondary"
-          withEdges
-          onChange={handlePageChange}
-        />
-      </div>
-    </>
-  );
+  if (token !== '') {
+    return (
+      <>
+        <div className='center'>
+          <h1 className='title'>本の情報</h1>
+          <ul className='ul center'>
+            {books.map((book) => (
+              <li key={book.id} className='li'>
+                {book.title}
+              </li>
+            ))}
+          </ul>
+        </div>
+        <div className='center' style={{ margin: '20px 0 0 0' }}>
+          <Pagination
+            total={books.length}
+            size='xl'
+            current={count}
+            pagesize={10}
+            variant='ghost'
+            colorScheme='secondary'
+            withEdges
+            onChange={handlePageChange}
+          />
+        </div>
+      </>
+    );
+  } else {
+    return <div></div>;
+  }
 };
 
 export default TokenBooksInfo;

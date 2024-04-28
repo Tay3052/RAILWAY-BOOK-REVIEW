@@ -8,10 +8,12 @@ const Header = () => {
   const [user, setUser] = useState<string>(''); // ユーザー名を格納するstate
   const [token, setToken] = useState<string>(''); // トークンを格納するstate
 
-  {
-    useEffect(() => {
-      setToken(Cookies.get('token') || '');
-      console.log(token);
+  const cookie = Cookies.get('token');
+
+  useEffect(() => {
+    setToken(cookie ?? '');
+    console.log(token);
+    if (token !== undefined) {
       axios
         .get('https://railway.bookreview.techtrain.dev/users', {
           headers: {
@@ -23,18 +25,23 @@ const Header = () => {
           setUser(res.data.name);
           console.log(user);
         });
-    }, [token, user]);
+    }
+    [token, user];
+  }, [cookie, token, user]);
+
+  if (user === '') {
+    setUser('ゲスト');
   }
 
-  if (token !== Cookies.get('token') || '') {
+  if (token !== Cookies.get('token')) {
     return (
       <>
         <div className='header'>
-          <h1>
-            <Link className='link' to={'/unlogin'}>
-              書籍レビュー
-            </Link>
-          </h1>
+          <div className='header'>
+            <h1>
+              <p className='link'>書籍レビュー</p>
+            </h1>
+          </div>
           <p className='user_name'>ようこそ {user} さん</p>
         </div>
         <div className='center'>
@@ -45,17 +52,17 @@ const Header = () => {
               </Link>
             </li>
             <li className='nav_li'>
-              <Link to={'/Signin'} className='link'>
+              <Link to={'/signin'} className='link'>
                 Signin
               </Link>
             </li>
             <li className='nav_li'>
-              <Link to={'/Signup'} className='link'>
+              <Link to={'/signup'} className='link'>
                 Signup
               </Link>
             </li>
             <li className='nav_li'>
-              <Link to={'/Signout'} className='link'>
+              <Link to={'/signout'} className='link'>
                 Signout
               </Link>
             </li>
@@ -83,12 +90,17 @@ const Header = () => {
               </Link>
             </li>
             <li className='nav_li'>
-              <Link to={'/Profile'} className='link'>
+              <Link to={'/profile'} className='link'>
                 Profile編集
               </Link>
             </li>
             <li className='nav_li'>
-              <Link to={'/Signout'} className='link'>
+              <Link to={'/new'} className='link'>
+                本の投稿
+              </Link>
+            </li>
+            <li className='nav_li'>
+              <Link to={'/signout'} className='link'>
                 Signout
               </Link>
             </li>
