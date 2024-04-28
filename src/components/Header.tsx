@@ -22,16 +22,16 @@ const Header = () => {
           },
         })
         .then((res) => {
-          setUser(res.data.name);
-          console.log(user);
+          if (res.data.name === undefined) {
+            setUser('ゲスト');
+          } else {
+            setUser(res.data.name);
+            console.log(user);
+          }
         });
     }
     [token, user];
   }, [cookie, token, user]);
-
-  if (user === '') {
-    setUser('ゲスト');
-  }
 
   if (token !== Cookies.get('token')) {
     return (

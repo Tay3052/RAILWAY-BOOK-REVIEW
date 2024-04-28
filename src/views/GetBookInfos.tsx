@@ -1,8 +1,9 @@
 import { useEffect, useState } from 'react';
 import axios from 'axios';
 import Cookies from 'js-cookie';
+import { Link } from 'react-router-dom';
 
-interface bookInfo {
+export interface bookInfo {
   id: string;
   title: string;
   url: string;
@@ -43,7 +44,7 @@ const GetBookInfos = ({ id }: { id: string }) => {
   }, [id, token]);
 
   if (loading) {
-    return <p>読み込み中...</p>;
+    return <p className='center'>読み込み中...</p>;
   }
 
   return (
@@ -59,6 +60,13 @@ const GetBookInfos = ({ id }: { id: string }) => {
               <p>詳細：{book.detail}</p>
               <p>レビュー：{book.review}</p>
               <p>レビュワー：{book.reviewer}</p>
+              <p style={{ color: 'red' }}>
+                {book.isMine ? (
+                  <Link to={`/edit/${id}`}>編集する</Link>
+                ) : (
+                  '他の人の本です'
+                )}
+              </p>
             </li>
           ))}
         </ul>

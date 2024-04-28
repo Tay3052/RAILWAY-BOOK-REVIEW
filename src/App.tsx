@@ -9,6 +9,7 @@ import './App.css';
 import EditProfile from './components/EditProfile';
 import NewBooks from './components/NewBook';
 import GetBookInfos from './views/GetBookInfos';
+import EditBooksInfo from './components/EditBookInfos';
 
 const DetailGetBooks = () => {
   const { id } = useParams<string>();
@@ -27,7 +28,7 @@ function App() {
             <Route path='/new' element={<NewBooks />} />
             <Route path='/profile' element={<EditProfile />} />
             <Route path={`/detail/:id`} element={<DetailGetBooks />} />
-            <Route path={`/edit/:id`} />
+            <Route path={`/edit/:id`} element={<EditBooksInfo />} />
             <Route path='/signup' element={<Signup />} />
             <Route path='/signin' element={<Signin />} />
             <Route path='/signout' element={<Signout />} />
