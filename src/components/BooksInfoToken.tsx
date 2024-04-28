@@ -1,4 +1,5 @@
 import React, { useEffect, useState, useContext } from 'react';
+import { Link } from 'react-router-dom';
 import axios from 'axios';
 import '../assets/scss/SignupSignin.scss';
 import { Pagination } from '@yamada-ui/react';
@@ -56,7 +57,7 @@ const TokenBooksInfo: React.FC<ReceiveTokenProps> = ({ token, page }) => {
           <ul className='ul center'>
             {books.map((book) => (
               <li key={book.id} className='li'>
-                {book.title}
+                <Link to={`/detail/${book.id}`}>{book.title}</Link>
               </li>
             ))}
           </ul>

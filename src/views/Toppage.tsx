@@ -4,12 +4,10 @@ import Cookies from 'js-cookie';
 import React from 'react';
 import '../assets/scss/SignupSignin.scss';
 import UnloginBooks from '../components/UnloginBooks';
-export const MyContext = React.createContext<number>(0);
 
 const TopPage = () => {
   const [token, setToken] = useState('');
   const [page, setPage] = useState<number>(0);
-  const myContextValue = useContext(MyContext);
 
   useEffect(() => {
     // Cookieからtokenを取得
@@ -17,15 +15,14 @@ const TopPage = () => {
     const token = Cookies.get('token');
     console.log(token);
     if (token) setToken(token);
-    if (myContextValue) setPage(myContextValue);
-  }, [token, myContextValue]);
+  }, [token]);
 
   if (Cookies.get('token') !== undefined) {
     return (
       <>
-        <MyContext.Provider value={page}>
+        <div>
           <TokenBooksInfo token={token} page={page} />
-        </MyContext.Provider>
+        </div>
       </>
     );
   } else {

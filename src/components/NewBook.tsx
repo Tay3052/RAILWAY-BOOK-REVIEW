@@ -28,7 +28,7 @@ const NewBooks = () => {
   booksForm.append('review', '');
 
   const handleSubmit = async (
-    values: Book[],
+    values: Book,
     { setSubmitting }: { setSubmitting: (isSubmitting: boolean) => void },
   ) => {
     axios
